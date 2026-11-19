@@ -1,0 +1,16 @@
+# generated data and caches
+*.db
+*.db-journal
+*.sqlite
+var/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+build/
+dist/
+.venv/
+venv/
+.idea/
+.vscode/

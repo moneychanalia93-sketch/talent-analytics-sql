@@ -1,0 +1,28 @@
+name: tests
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.11", "3.12", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Show SQLite version
+        run: python -c "import sqlite3; print(sqlite3.sqlite_version)"
+      - name: Unit tests
+        run: python -m unittest discover -s tests -t . -v
+      - name: Smoke test the command line
+        run: |
+          python -m talentsql seed --employees 200 --applications 4000
+          python -m talentsql list
+          python -m talentsql run 1
+          python -m talentsql explain 9
